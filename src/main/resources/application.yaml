@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: authService
+  thymeleaf:
+    # disable templates (.html)
+    check-template-location: false
+  datasource:
+    enabled: false
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration
+  jwt:
+    secret: ${JWT_SECRET}
+    accessTokenExpiration: 1800 # 30 minutes in seconds
+    refreshTokenExpiration: 604700 # 7 days in seconds
+  profiles:
+    # profile can be set using a default springboot environment: SPRING_PROFILES_ACTIVE
+    active: dev
+  # Table record limits (See: TableLimitConfig class and MaxTableSizeAspect)
+  limits:
+    profile: 20
+    user: 20
+    address: 20
+
+swaggerUseSSL: false

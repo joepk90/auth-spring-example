@@ -1,0 +1,4 @@
+spring:
+
+# custom attribute to force swagger to use https in prod
+swaggerUseSSL: true

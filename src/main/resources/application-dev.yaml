@@ -1,0 +1,3 @@
+spring:
+  jpa:
+    show-sql: true # show sql statements being run
