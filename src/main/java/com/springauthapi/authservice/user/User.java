@@ -34,8 +34,9 @@ public class User {
      * seperate table
      */
     @Column(name = "role")
+    @Builder.Default
     @Enumerated(EnumType.STRING) // store value as a string in the db
-    private Role role;
+    private Role role = Role.USER;
 
     @Override
     public String toString() {
