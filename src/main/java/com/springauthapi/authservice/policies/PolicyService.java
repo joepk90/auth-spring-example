@@ -55,9 +55,6 @@ public class PolicyService {
                                                 "resource", resourceMap,
                                                 "actions", actions)));
 
-                // System.out.println("================ CERBOS REQUEST BODY:");
-                // System.out.println(requestBody);
-
                 return requestBody;
         }
 
