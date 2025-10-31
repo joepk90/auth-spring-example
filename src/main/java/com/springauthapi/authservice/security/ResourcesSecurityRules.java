@@ -14,7 +14,7 @@ public class ResourcesSecurityRules implements SecurityRules {
             AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry) {
         registry
                 .requestMatchers(HttpMethod.GET, routePath + "/**").permitAll()        
-                .requestMatchers(HttpMethod.POST, routePath + "/**").denyAll()
+                .requestMatchers(HttpMethod.POST, routePath + "/**").permitAll()  
                 .requestMatchers(HttpMethod.PUT, routePath + "/**").denyAll()
                 .requestMatchers(HttpMethod.DELETE, routePath + "/**").denyAll();
     }
