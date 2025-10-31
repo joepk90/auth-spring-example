@@ -25,3 +25,7 @@ spring:
     address: 20
 
 swaggerUseSSL: false
+
+# cerbos policies
+policy-service:
+  base-url: ${POLICY_SERVICE_URL}
