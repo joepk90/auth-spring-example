@@ -7,8 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 
-import com.springauthapi.authservice.policies.PolicyServiceResponseDto;
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -34,7 +32,7 @@ public class ResourceController {
      * @return
      */
     @PostMapping("/")
-    public List<PolicyServiceResponseDto> checkUsersPermissions(
+    public List<CheckResourceResponse> checkUsersPermissions(
             HttpServletRequest request,
             @Valid @RequestBody CheckResourceRequest checkResearceRequest) {
 
@@ -45,12 +43,12 @@ public class ResourceController {
     }
 
     @GetMapping("/post/view")
-    public PolicyServiceResponseDto canView(HttpServletRequest request) {
+    public CheckResourceResponse canView(HttpServletRequest request) {
         return researceService.checkUsersPermission(request, reseourceType, "*", "view");
     }
 
     @GetMapping("/post/view/{id}")
-    public PolicyServiceResponseDto canViewWithId(
+    public CheckResourceResponse canViewWithId(
             HttpServletRequest request,
             @PathVariable String id) {
 
@@ -58,12 +56,12 @@ public class ResourceController {
     }
 
     @GetMapping("/post/edit")
-    public PolicyServiceResponseDto canEdit(HttpServletRequest request) {
+    public CheckResourceResponse canEdit(HttpServletRequest request) {
         return researceService.checkUsersPermission(request, reseourceType, "*", "edit");
     }
 
     @GetMapping("/post/edit/{id}")
-    public PolicyServiceResponseDto canEditWithId(
+    public CheckResourceResponse canEditWithId(
             HttpServletRequest request,
             @PathVariable String id) {
 

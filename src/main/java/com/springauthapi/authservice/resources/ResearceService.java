@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.springauthapi.authservice.jwt.JwtService;
 import com.springauthapi.authservice.policies.PolicyService;
-import com.springauthapi.authservice.policies.PolicyServiceResponseDto;
 import com.springauthapi.authservice.user.Role;
 import com.springauthapi.authservice.utils.AuthHeaderUtil;
 
@@ -71,12 +70,12 @@ public class ResearceService {
                 resourceKind.toUpperCase());
     }
 
-    public List<PolicyServiceResponseDto> mapToPolicyServiceResponse(Map<String, String> response) {
+    public List<CheckResourceResponse> mapToPolicyServiceResponse(Map<String, String> response) {
         return response.entrySet()
                 .stream()
                 .map(entry -> {
                     boolean isAllowed = entry.getValue().equals(resourceAllowedValue);
-                    return new PolicyServiceResponseDto(entry.getKey(), isAllowed);
+                    return new CheckResourceResponse(entry.getKey(), isAllowed);
                 })
                 .toList();
     }
@@ -91,7 +90,7 @@ public class ResearceService {
      * @param actions
      * @return
      */
-    public List<PolicyServiceResponseDto> checkUsersPermissions(
+    public List<CheckResourceResponse> checkUsersPermissions(
             HttpServletRequest request,
             String resourceType,
             String resourceId,
@@ -115,7 +114,7 @@ public class ResearceService {
      * @param actionType
      * @return
      */
-    public PolicyServiceResponseDto checkUsersPermission(
+    public CheckResourceResponse checkUsersPermission(
             HttpServletRequest request,
             String resourceKind,
             String resourceId,
@@ -128,13 +127,13 @@ public class ResearceService {
 
         // could be simplified, but decided to reuse logic in mapToPolicyServiceResponse
         // should only be complexity on n(1), as only one action type should ever be returned
-        PolicyServiceResponseDto policyMap = mapToPolicyServiceResponse(response).stream()
+        CheckResourceResponse policyMap = mapToPolicyServiceResponse(response).stream()
                 .filter(p -> p.getAction().equals(actionType))
                 .findFirst()
                 .orElseThrow();
 
         var message = generateMessage(resourceKind, actionType, policyMap.getIsAuthorized());
 
-        return new PolicyServiceResponseDto(message, policyMap.getIsAuthorized());
+        return new CheckResourceResponse(message, policyMap.getIsAuthorized());
     }
 }
