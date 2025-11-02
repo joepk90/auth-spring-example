@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@Tag(name = "Resource Controller")
+@Tag(name = "Resource Controller", description = "Controller for checking a user's permissions of a resource. To use thhe controlelr you must be authenticated.")
 @RequestMapping("/resource")
 public class ResourceController {
 
