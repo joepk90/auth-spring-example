@@ -82,6 +82,35 @@ public class ResourceController {
                 PolicyConstants.ACTION_EDIT);
     }
 
+    @GetMapping("/post/delete")
+    public CheckResourceResponse canDelete(HttpServletRequest request) {
+        return researceService.checkUsersPermission(
+                request,
+                PolicyConstants.RESOURCE_POST,
+                "*",
+                PolicyConstants.ACTION_DELETE);
+    }
+
+    @GetMapping("/post/delete/{id}")
+    public CheckResourceResponse canDeleteWithId(
+            HttpServletRequest request,
+            @PathVariable String id) {
+
+        return researceService.checkUsersPermission(
+                request,
+                PolicyConstants.RESOURCE_POST, id,
+                PolicyConstants.ACTION_DELETE);
+    }
+
+    @GetMapping("/post/create")
+    public CheckResourceResponse canCreate(HttpServletRequest request) {
+        return researceService.checkUsersPermission(
+                request,
+                PolicyConstants.RESOURCE_POST,
+                "*",
+                PolicyConstants.ACTION_CREATE);
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Void> handleAccessDenied() {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
