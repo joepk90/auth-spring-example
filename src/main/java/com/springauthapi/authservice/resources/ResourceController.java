@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 
+import com.springauthapi.authservice.policies.PolicyConstants;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -20,8 +22,6 @@ import java.util.List;
 public class ResourceController {
 
     private final ResearceService researceService;
-    private final String reseourceType = "post"; // could use entity type?
-
 
     /**
      * Root Endpoint (POST):
@@ -44,7 +44,11 @@ public class ResourceController {
 
     @GetMapping("/post/view")
     public CheckResourceResponse canView(HttpServletRequest request) {
-        return researceService.checkUsersPermission(request, reseourceType, "*", "view");
+        return researceService.checkUsersPermission(
+                request,
+                PolicyConstants.RESOURCE_POST,
+                "*",
+                PolicyConstants.ACTION_VIEW);
     }
 
     @GetMapping("/post/view/{id}")
@@ -52,12 +56,19 @@ public class ResourceController {
             HttpServletRequest request,
             @PathVariable String id) {
 
-        return researceService.checkUsersPermission(request, reseourceType, id, "view");
+        return researceService.checkUsersPermission(
+                request,
+                PolicyConstants.RESOURCE_POST, id,
+                PolicyConstants.ACTION_VIEW);
     }
 
     @GetMapping("/post/edit")
     public CheckResourceResponse canEdit(HttpServletRequest request) {
-        return researceService.checkUsersPermission(request, reseourceType, "*", "edit");
+        return researceService.checkUsersPermission(
+                request,
+                PolicyConstants.RESOURCE_POST,
+                "*",
+                PolicyConstants.ACTION_EDIT);
     }
 
     @GetMapping("/post/edit/{id}")
@@ -65,7 +76,10 @@ public class ResourceController {
             HttpServletRequest request,
             @PathVariable String id) {
 
-        return researceService.checkUsersPermission(request, reseourceType, id, "edit");
+        return researceService.checkUsersPermission(
+                request,
+                PolicyConstants.RESOURCE_POST, id,
+                PolicyConstants.ACTION_EDIT);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
