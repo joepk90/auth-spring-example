@@ -32,6 +32,7 @@ public class Users {
                 try {
                         List<User> users = new ArrayList<>();
 
+                        // userId = 1
                         users.add(User.builder()
                                         .name("John Smith")
                                         .email("johnsmith@gmail.com")
@@ -39,13 +40,15 @@ public class Users {
                                         .password(passwordEncoder.encode("userpass"))
                                         .build());
 
+                        // userId = 2
                         users.add(User.builder()
                                         .name("John Doe")
                                         .email("johndoe@gmail.com")
                                         .role(Role.AGENT)
                                         .password(passwordEncoder.encode("agentpass"))
                                         .build());
-
+                                        
+                        // userId = 3
                         users.add(User.builder()
                                         .name("Jane Smith")
                                         .email("janesmith@gmail.com")
@@ -53,6 +56,7 @@ public class Users {
                                         .password(passwordEncoder.encode("managerpass"))
                                         .build());
 
+                        // userId = 4
                         users.add(User.builder()
                                         .name("Jane Doe")
                                         .email("janedoeh@gmail.com")
@@ -60,6 +64,7 @@ public class Users {
                                         .password(passwordEncoder.encode("adminpass"))
                                         .build());
 
+                        // userId = 5
                         users.add(User.builder()
                                         .name("Charles Montgomery Burns")
                                         .email("charlesburns@gmail.com")
