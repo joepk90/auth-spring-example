@@ -5,11 +5,15 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.springauthapi.authservice.resources.ResourceRequestProperties;
+import com.springauthapi.authservice.resources.UserRequestProperties;
+
 import jakarta.annotation.PostConstruct;
 import java.lang.String;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class PolicyService {
@@ -32,28 +36,35 @@ public class PolicyService {
         }
 
         private Map<String, Object> buildCerbosRequest(
-                        String principal,
-                        String role,
-                        String resourceKind,
-                        String resourceId,
-                        List<String> actions) {
+                        UserRequestProperties userRequestProperties,
+                        ResourceRequestProperties resourceRequestProperties) {
 
                 // could pass in an entity and get the type and id?
                 Map<String, Object> principalMap = Map.of(
-                                "id", principal,
-                                "roles", List.of(role.toLowerCase()));
+                                "id", userRequestProperties.getUserId(),
+                                "roles", List.of(userRequestProperties.getRole().toLowerCase()));
 
                 // could pass in an entity and get the type and id?
-                Map<String, Object> resourceMap = Map.of(
-                                "kind", resourceKind,
-                                "id", resourceId);
+                Map<String, Object> resourceMap = new HashMap<>();
+                resourceMap.put("kind", resourceRequestProperties.getResourceType());
+                resourceMap.put("id", resourceRequestProperties.getResourceId());
+
+                String resourceUserId = resourceRequestProperties.getResourceOwnerId();
+
+                // add resource attributes if passed
+                if (!resourceUserId.isEmpty()) {
+                        resourceMap.put("attr", Map.of(
+                                        "ownerId", resourceUserId));
+                }
 
                 var requestBody = Map.of(
-                                // "requestId", UUID.randomUUID().toString(),
+                                "requestId", UUID.randomUUID().toString(),
                                 "principal", principalMap,
                                 "resources", List.of(Map.of(
                                                 "resource", resourceMap,
-                                                "actions", actions)));
+                                                "actions", resourceRequestProperties.getActionTypes())));
+                
+                                                
 
                 return requestBody;
         }
@@ -72,16 +83,19 @@ public class PolicyService {
         /**
          * Check authorization for a given principal, resource, and list of actions.
          */
-        public Map<String, String> checkAccess(String principle, String role, String resourceKind, String resourceId,
-                        List<String> actions) {
+        public Map<String, String> checkAccess(
+                        UserRequestProperties userRequestProperties,
+                        ResourceRequestProperties resourceRequestProperties) {
 
-                var requestBody = buildCerbosRequest(principle, role, resourceKind, resourceId, actions);
+                var requestBody = buildCerbosRequest(userRequestProperties, resourceRequestProperties);
+                
 
                 Map<String, Object> response = webClient.post()
                                 .uri(resourceEndpointPath)
                                 .bodyValue(requestBody)
                                 .retrieve()
-                                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+                                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+                                })
                                 .block();
 
                 return extractActions(response);

@@ -15,5 +15,20 @@ public class PolicyConstants {
     /**
      * RESOURCE TYPES
      */
-    public static final String RESOURCE_POST = "post";    
+    public static final String RESOURCE_POST = "post";
+
+    /**
+     * DEFAULT RESOURCE ID
+     */
+    public static final String RESOURCE_ID = "*";
+
+    /**
+     * DEFAULT RESOURCE ONWER ID
+     */
+    public static final String RESOURCE_OWNER_ID = "";
+
+     /**
+     * RESOURCE EFFECT RESULTS
+     */
+    public static final String RESOURCE_EFFECT_ALLOW = "EFFECT_ALLOW";
 }

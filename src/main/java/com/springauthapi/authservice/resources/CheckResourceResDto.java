@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CheckResourceResponse {
+public class CheckResourceResDto {
     private String action;
     private Boolean isAuthorized;   
 }
