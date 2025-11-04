@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@Tag(name = "Resource Controller", description = "Controller for checking a user's permissions of a resource. To use thhe controlelr you must be authenticated.")
+@Tag(name = "Resource Controller", description = "Controller for checking a user's permissions of a resource. To use the controlelr you must be authenticated.")
 @RequestMapping("/resource")
 public class ResourceController {
 
@@ -50,7 +50,7 @@ public class ResourceController {
     public CheckResourceResDto canView(HttpServletRequest request) {
         var resourceProperties = buildResourcePropertiesWithSinglularAction(
                 PolicyConstants.RESOURCE_ID,
-                PolicyConstants.ACTION_CREATE,
+                PolicyConstants.ACTION_VIEW,
                 PolicyConstants.RESOURCE_OWNER_ID);
 
         return researceService.checkUsersActionAccess(
