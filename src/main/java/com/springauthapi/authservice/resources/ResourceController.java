@@ -53,7 +53,7 @@ public class ResourceController {
                 PolicyConstants.ACTION_CREATE,
                 PolicyConstants.RESOURCE_OWNER_ID);
 
-        return researceService.checkUsersPermission(
+        return researceService.checkUsersActionAccess(
                 request,
                 resourceProperties);
     }
@@ -67,7 +67,7 @@ public class ResourceController {
                 PolicyConstants.ACTION_VIEW,
                 checkResearceRecordRequest.getResourceOwnerId());
 
-        return researceService.checkUsersPermission(
+        return researceService.checkUsersActionAccess(
                 request,
                 resourceProperties);
     }
@@ -79,7 +79,7 @@ public class ResourceController {
                 PolicyConstants.ACTION_EDIT,
                 PolicyConstants.RESOURCE_OWNER_ID);
 
-        return researceService.checkUsersPermission(
+        return researceService.checkUsersActionAccess(
                 request,
                 resourceProperties);
     }
@@ -93,7 +93,7 @@ public class ResourceController {
                 PolicyConstants.ACTION_EDIT,
                 checkResearceRecordRequest.getResourceOwnerId());
 
-        return researceService.checkUsersPermission(
+        return researceService.checkUsersActionAccess(
                 request,
                 resourceProperties);
     }
@@ -105,7 +105,7 @@ public class ResourceController {
                 PolicyConstants.ACTION_DELETE,
                 PolicyConstants.RESOURCE_OWNER_ID);
 
-        return researceService.checkUsersPermission(
+        return researceService.checkUsersActionAccess(
                 request,
                 resourceProperties);
     }
@@ -119,7 +119,7 @@ public class ResourceController {
                 PolicyConstants.ACTION_DELETE,
                 checkResearceRecordRequest.getResourceOwnerId());
 
-        return researceService.checkUsersPermission(
+        return researceService.checkUsersActionAccess(
                 request,
                 resourceProperties);
     }
@@ -131,7 +131,7 @@ public class ResourceController {
                 PolicyConstants.ACTION_CREATE,
                 PolicyConstants.RESOURCE_OWNER_ID);
 
-        return researceService.checkUsersPermission(
+        return researceService.checkUsersActionAccess(
                 request,
                 resourceProperties);
     }

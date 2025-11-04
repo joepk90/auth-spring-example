@@ -22,7 +22,7 @@ public class ResearceService {
     private final JwtService jwtService;
     private final PolicyService policyService;
 
-    public Map<String, String> checkAccessTest(
+    public Map<String, String> checkAccess(
             String token,
             ResourceRequestProperties resourceRequestProperties) {
 
@@ -96,7 +96,7 @@ public class ResearceService {
         // throws exception id token is not valid
         String token = validateToken(request);
 
-        var response = checkAccessTest(token, resourceRequestProperties);
+        var response = checkAccess(token, resourceRequestProperties);
 
         return mapToPolicyServiceResponse(response);
     }
@@ -111,27 +111,31 @@ public class ResearceService {
      * @param actionType
      * @return
      */
-    public CheckResourceResDto checkUsersPermission(
+    public CheckResourceResDto checkUsersActionAccess(
             HttpServletRequest request,
             ResourceRequestProperties resourceRequestProperties) {
 
         // throws exception id token is not valid
         String token = validateToken(request);
 
-        var response = checkAccessTest(token, resourceRequestProperties);
+        var response = checkAccess(token, resourceRequestProperties);
+
+        // checkUsersActionAccess is only meant to handle checking access of one action type
+        // so we only expect one action type to be passed in, even though the property type is a List
+        var actionType = resourceRequestProperties.getActionTypes().get(0);
 
         // could be simplified, but decided to reuse logic in mapToPolicyServiceResponse
         // should only be complexity on n(1), as only one action type should ever be
         // returned
         CheckResourceResDto policyMap = mapToPolicyServiceResponse(response).stream()
-                .filter(p -> p.getAction().equals(
-                        resourceRequestProperties.getActionTypes().get(0)))
+                .filter(p -> p.getAction().equals(actionType))
                 .findFirst()
                 .orElseThrow();
 
         var message = generateMessage(
                 resourceRequestProperties.getResourceType(),
-                resourceRequestProperties.getActionTypes().get(0), policyMap.getIsAuthorized());
+                actionType,
+                policyMap.getIsAuthorized());
 
         return new CheckResourceResDto(message, policyMap.getIsAuthorized());
     }
