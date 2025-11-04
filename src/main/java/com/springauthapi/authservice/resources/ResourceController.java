@@ -50,7 +50,7 @@ public class ResourceController {
     public CheckResourceResDto canView(HttpServletRequest request) {
         var resourceProperties = buildResourcePropertiesWithSinglularAction(
                 PolicyConstants.RESOURCE_ID,
-                PolicyConstants.ACTION_CREATE,
+                PolicyConstants.ACTION_VIEW,
                 PolicyConstants.RESOURCE_OWNER_ID);
 
         return researceService.checkUsersActionAccess(
