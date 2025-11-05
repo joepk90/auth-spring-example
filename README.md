@@ -1,6 +1,6 @@
 # Spring Auth API
 
-Example Spingboot API demonstrating an Authenticatin and Authorisation layer.
+Example Spingboot API demonstrating an Authentication and Authorisation layer.
 
 This service will allow users to authenticate (login) using JWT, as well as check a users authorisation connecting to an exernal Cerbos service.
 
@@ -76,7 +76,7 @@ Using the In Memory Data, the following users are can be used to login:
 ```
 # user id: 4 | role: admin
 {
-  "email": "jjanedoeh@gmail.com",
+  "email": "janedoeh@gmail.com",
   "password": "adminpass"
 }
 ```
@@ -109,16 +109,54 @@ There is the option of checking if a user has permission to perform a certain ac
 
 In order for the resource request to succeed and return `EFFECT_ALLOW` (`EFFECT_DENY` would mean the user does not have permission), the `resourceOwnerId` must match the ID of the user. So if you were to authenticate as `johnsmith@gmail.com`, the `resourceOwnerId` would need to be `1`. This is to simulate how another service might interact with this Auth Service. The other service can pass provide the Resource ID, but only this service can check User ID of the authenticated user.
 
-The resource endpoints are:
-- Post
-- `/view` (GET)
-- `/edit` (GET)
-- `/delete` (GET)
-- `/create` (GET)
+The post resource type endpoints are setup as:
+- `/post/view`
+- `/post/edit`
+- `/post/delete`
+- `/post/create`
 
 
 #### Derived Roles
 The User ID must match the Resource Owner ID.
+
+## Examples
+
+### Authorization Failure (EFFECT_DENY)
+- Login as User 1 (johnsmith@gmail.com)
+- User the `/resource/post/edit` (POST) endpoint
+
+The following response is returned because the `User` role does not have permission to edit records of the `post` resource type:
+```
+{
+  "action": "User is not Authorized to VIEW the POST resource.",
+  "isAuthorized": false
+}
+```
+
+### Authorization Success (EFFECT_ALLOW)
+- Login as User 5 (charlesburns@gmail.com)
+- User the `/resource/post/edit` (POST) endpoint
+
+The following response is returned because the `Owner` Role does have permission to edit records of the `post` resource type:
+```
+{
+  "action": "User is Authorized to EDIT the POST resource.",
+  "isAuthorized": true
+}
+```
+
+### Authorization Success using the Derived Role (EFFECT_ALLOW)
+- Login as User 1 (johnsmith@gmail.com)
+- User the `/resource/post/edit` (POST) endpoint
+- Populate the `resourceOwnerId` property on the request body with the value of `1`
+
+The following response is returned because User `johnsmith@gmail.com` has the user ID `1`, which matches the id passed to the `resourceOwnerId` property on the request body, effectively promoting the user to the Derived Role of `owner` for this specific Resource record.
+```
+{
+  "action": "User is Authorized to EDIT the POST resource.",
+  "isAuthorized": true
+}
+```
 
 
 ## Authorization Policies (Cerbos Policies)
@@ -127,7 +165,5 @@ The Cerbos Policies can be found here:
 
 
 ## Potential Improvements
-- Better usage of the roles could be setup. Currently `View` doesn't exist, and a lot of the other roles aren't used in the Policy Service .
+- Better usage of the roles could be setup. Currently `View` doesn't exist, and a lot of the other roles aren't used in the Policy Service.
 - Consider using `spring-boot-starter-oauth2-resource-server` to handle JWT authentication. This will mean a lot of the JWT logic is handled for us, along with the securty setup in the SecurtyConfig.java file.
-
-
