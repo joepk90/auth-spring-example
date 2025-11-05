@@ -46,24 +46,11 @@ public class ResourceController {
         return researceService.checkUsersPermissions(request, resourceProperties);
     }
 
-    @GetMapping("/post/view")
-    public CheckResourceResDto canView(HttpServletRequest request) {
+    @PostMapping("/post/view")
+    public CheckResourceResDto canView(HttpServletRequest request,
+            @Valid @RequestBody CheckResourceActionReqDto checkResearceRecordRequest) {
         var resourceProperties = buildResourcePropertiesWithSinglularAction(
                 PolicyConstants.RESOURCE_ID,
-                PolicyConstants.ACTION_VIEW,
-                PolicyConstants.RESOURCE_OWNER_ID);
-
-        return researceService.checkUsersActionAccess(
-                request,
-                resourceProperties);
-    }
-
-    @PostMapping("/post/view/{id}")
-    public CheckResourceResDto canViewWithId(
-            HttpServletRequest request,
-            @PathVariable String id,
-            @Valid @RequestBody CheckResourceActionReqDto checkResearceRecordRequest) {
-        var resourceProperties = buildResourcePropertiesWithSinglularAction(id,
                 PolicyConstants.ACTION_VIEW,
                 checkResearceRecordRequest.getResourceOwnerId());
 
@@ -72,24 +59,13 @@ public class ResourceController {
                 resourceProperties);
     }
 
-    @GetMapping("/post/edit")
-    public CheckResourceResDto canEdit(HttpServletRequest request) {
+
+
+    @PostMapping("/post/edit")
+    public CheckResourceResDto canEdit(HttpServletRequest request,
+            @Valid @RequestBody CheckResourceActionReqDto checkResearceRecordRequest) {
         var resourceProperties = buildResourcePropertiesWithSinglularAction(
                 PolicyConstants.RESOURCE_ID,
-                PolicyConstants.ACTION_EDIT,
-                PolicyConstants.RESOURCE_OWNER_ID);
-
-        return researceService.checkUsersActionAccess(
-                request,
-                resourceProperties);
-    }
-
-    @PostMapping("/post/edit/{id}")
-    public CheckResourceResDto canEditWithId(
-            HttpServletRequest request,
-            @PathVariable String id,
-            @Valid @RequestBody CheckResourceActionReqDto checkResearceRecordRequest) {
-        var resourceProperties = buildResourcePropertiesWithSinglularAction(id,
                 PolicyConstants.ACTION_EDIT,
                 checkResearceRecordRequest.getResourceOwnerId());
 
@@ -98,24 +74,11 @@ public class ResourceController {
                 resourceProperties);
     }
 
-    @GetMapping("/post/delete")
-    public CheckResourceResDto canDelete(HttpServletRequest request) {
+    @PostMapping("/post/delete")
+    public CheckResourceResDto canDelete(HttpServletRequest request,
+            @Valid @RequestBody CheckResourceActionReqDto checkResearceRecordRequest) {
         var resourceProperties = buildResourcePropertiesWithSinglularAction(
                 PolicyConstants.RESOURCE_ID,
-                PolicyConstants.ACTION_DELETE,
-                PolicyConstants.RESOURCE_OWNER_ID);
-
-        return researceService.checkUsersActionAccess(
-                request,
-                resourceProperties);
-    }
-
-    @PostMapping("/post/delete/{id}")
-    public CheckResourceResDto canDeleteWithId(
-            HttpServletRequest request,
-            @PathVariable String id,
-            @Valid @RequestBody CheckResourceActionReqDto checkResearceRecordRequest) {
-        var resourceProperties = buildResourcePropertiesWithSinglularAction(id,
                 PolicyConstants.ACTION_DELETE,
                 checkResearceRecordRequest.getResourceOwnerId());
 
@@ -124,12 +87,13 @@ public class ResourceController {
                 resourceProperties);
     }
 
-    @GetMapping("/post/create")
-    public CheckResourceResDto canCreate(HttpServletRequest request) {
+    @PostMapping("/post/create")
+    public CheckResourceResDto canCreate(HttpServletRequest request,
+            @Valid @RequestBody CheckResourceActionReqDto checkResearceRecordRequest) {
         var resourceProperties = buildResourcePropertiesWithSinglularAction(
                 PolicyConstants.RESOURCE_ID,
                 PolicyConstants.ACTION_CREATE,
-                PolicyConstants.RESOURCE_OWNER_ID);
+                checkResearceRecordRequest.getResourceOwnerId());
 
         return researceService.checkUsersActionAccess(
                 request,
