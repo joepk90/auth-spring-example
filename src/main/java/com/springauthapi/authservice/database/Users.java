@@ -34,42 +34,42 @@ public class Users {
 
                         // userId = 1
                         users.add(User.builder()
-                                        .name("John Smith")
-                                        .email("johnsmith@gmail.com")
+                                        .name("User")
+                                        .email("user@gmail.com")
                                         .role(Role.USER)
-                                        .password(passwordEncoder.encode("userpass"))
+                                        .password(passwordEncoder.encode("user"))
                                         .build());
 
                         // userId = 2
                         users.add(User.builder()
-                                        .name("John Doe")
-                                        .email("johndoe@gmail.com")
+                                        .name("Agent")
+                                        .email("agent@gmail.com")
                                         .role(Role.AGENT)
-                                        .password(passwordEncoder.encode("agentpass"))
+                                        .password(passwordEncoder.encode("agent"))
                                         .build());
                                         
                         // userId = 3
                         users.add(User.builder()
-                                        .name("Jane Smith")
-                                        .email("janesmith@gmail.com")
+                                        .name("Manager")
+                                        .email("manager@gmail.com")
                                         .role(Role.MANAGER)
-                                        .password(passwordEncoder.encode("managerpass"))
+                                        .password(passwordEncoder.encode("manager"))
                                         .build());
 
                         // userId = 4
                         users.add(User.builder()
-                                        .name("Jane Doe")
-                                        .email("janedoeh@gmail.com")
+                                        .name("Admin")
+                                        .email("admin@gmail.com")
                                         .role(Role.ADMIN)
-                                        .password(passwordEncoder.encode("adminpass"))
+                                        .password(passwordEncoder.encode("admin"))
                                         .build());
 
                         // userId = 5
                         users.add(User.builder()
-                                        .name("Charles Montgomery Burns")
-                                        .email("charlesburns@gmail.com")
+                                        .name("Owner")
+                                        .email("owner@gmail.com")
                                         .role(Role.OWNER)
-                                        .password(passwordEncoder.encode("ownerpass"))
+                                        .password(passwordEncoder.encode("owner"))
                                         .build());
 
                         return users;
