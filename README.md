@@ -110,10 +110,11 @@ There is the option of checking if a user has permission to perform a certain ac
 In order for the resource request to succeed and return `EFFECT_ALLOW` (`EFFECT_DENY` would mean the user does not have permission), the `resourceOwnerId` must match the ID of the user. So if you were to authenticate as `johnsmith@gmail.com`, the `resourceOwnerId` would need to be `1`. This is to simulate how another service might interact with this Auth Service. The other service can pass provide the Resource ID, but only this service can check User ID of the authenticated user.
 
 The post resource type endpoints are setup as:
-- `/post/view`
-- `/post/edit`
-- `/post/delete`
 - `/post/create`
+- `/post/read`
+- `/post/update`
+- `/post/delete`
+
 
 
 #### Derived Roles
@@ -128,7 +129,7 @@ The User ID must match the Resource Owner ID.
 The following response is returned because the `User` role does not have permission to edit records of the `post` resource type:
 ```
 {
-  "action": "User is not Authorized to VIEW the POST resource.",
+  "action": "User is not Authorized to READ the POST resource.",
   "isAuthorized": false
 }
 ```
@@ -165,5 +166,4 @@ The Cerbos Policies can be found here:
 
 
 ## Potential Improvements
-- Better usage of the roles could be setup. Currently `View` doesn't exist, and a lot of the other roles aren't used in the Policy Service.
 - Consider using `spring-boot-starter-oauth2-resource-server` to handle JWT authentication. This will mean a lot of the JWT logic is handled for us, along with the securty setup in the SecurtyConfig.java file.
