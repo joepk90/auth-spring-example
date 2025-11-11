@@ -29,19 +29,13 @@ public class JwtService {
     }
 
     private Jwt generateToken(User user, long tokenExpiration) {
-        var claimsBuilder = Jwts.claims()
+        var claims = Jwts.claims()
                 .subject(user.getId().toString())
                 .add("email", user.getEmail())
                 .add("role", user.getRole())
-                .issuedAt(new Date());
-
-        // Only add expiration if a value is provided
-        // this allows never expiring JWT tokens - this code should not be allowed in a production application!
-        if (tokenExpiration > 0) {
-            claimsBuilder.expiration(new Date(System.currentTimeMillis() + 1000 * tokenExpiration));
-        }
-
-        var claims = claimsBuilder.build();
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 1000 * tokenExpiration))
+                .build();
 
         return new Jwt(claims, jwtConfig.getSecretKey());
     }
