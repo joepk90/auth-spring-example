@@ -13,8 +13,9 @@ spring:
       - org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration
   jwt:
     secret: ${JWT_SECRET}
-    accessTokenExpiration: 1800 # 30 minutes in seconds
-    refreshTokenExpiration: 604700 # 7 days in seconds
+    # tokens set to 0 to allow never expiring JWT tokens
+    accessTokenExpiration: 0 # 30 minutes in seconds: 1800
+    refreshTokenExpiration: 0 # 7 days in seconds: 604700
   profiles:
     # profile can be set using a default springboot environment: SPRING_PROFILES_ACTIVE
     active: dev
