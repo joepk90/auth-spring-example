@@ -37,7 +37,7 @@ public class Users {
                                         .name("User")
                                         .email("user@gmail.com")
                                         .role(Role.USER)
-                                        .password(passwordEncoder.encode("userpass"))
+                                        .password(passwordEncoder.encode("user"))
                                         .build());
 
                         // userId = 2
@@ -45,7 +45,7 @@ public class Users {
                                         .name("Agent")
                                         .email("agent@gmail.com")
                                         .role(Role.AGENT)
-                                        .password(passwordEncoder.encode("agentpass"))
+                                        .password(passwordEncoder.encode("agent"))
                                         .build());
                                         
                         // userId = 3
@@ -53,7 +53,7 @@ public class Users {
                                         .name("Manager")
                                         .email("manager@gmail.com")
                                         .role(Role.MANAGER)
-                                        .password(passwordEncoder.encode("managerpass"))
+                                        .password(passwordEncoder.encode("manager"))
                                         .build());
 
                         // userId = 4
@@ -61,7 +61,7 @@ public class Users {
                                         .name("Admin")
                                         .email("admin@gmail.com")
                                         .role(Role.ADMIN)
-                                        .password(passwordEncoder.encode("adminpass"))
+                                        .password(passwordEncoder.encode("admin"))
                                         .build());
 
                         // userId = 5
@@ -69,7 +69,7 @@ public class Users {
                                         .name("Owner")
                                         .email("owner@gmail.com")
                                         .role(Role.OWNER)
-                                        .password(passwordEncoder.encode("ownerpass"))
+                                        .password(passwordEncoder.encode("owner"))
                                         .build());
 
                         return users;
